@@ -7,7 +7,10 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
 };
 
-const variantClasses: Record<ButtonVariant, string> = {
+export const buttonBaseClasses =
+  "inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition duration-150 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm";
+
+export const buttonVariants: Record<ButtonVariant, string> = {
   primary:
     "bg-accent text-text-primary hover:bg-accent-strong focus-visible:outline-accent border border-transparent",
   secondary:
@@ -24,14 +27,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     <button
       ref={ref}
       type={type}
-      className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition duration-150",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2",
-        "disabled:opacity-50 disabled:cursor-not-allowed",
-        "shadow-sm",
-        variantClasses[variant],
-        className,
-      )}
+      className={cn(buttonBaseClasses, buttonVariants[variant], className)}
       {...props}
     />
   );

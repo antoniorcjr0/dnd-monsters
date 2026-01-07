@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Button, Card, Heading, Loader, Text } from "@/design-system";
+import { Card, Heading, Text, buttonBaseClasses, buttonVariants } from "@/design-system";
+import { cn } from "@/design-system/components/utils";
 import { getApiErrorMessage, isNotFoundError } from "../api/errors";
 import { fetchMonsterByIndex } from "../api/monstersApi";
 import type { MonsterAction, MonsterDetails as MonsterDetailsType, MonsterSpeed } from "../types";
@@ -72,19 +73,22 @@ export async function MonsterDetails({ index }: MonsterDetailsProps) {
 
     return (
       <div className="flex flex-col gap-6">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="space-y-1">
-            <Heading as="h1" size="lg">
-              {monster.name}
-            </Heading>
-            <Text variant="secondary" size="sm">
-              {monster.size} {monster.type} • {monster.alignment}
-            </Text>
-          </div>
-          <Button variant="secondary" asChild>
-            <Link href="/monsters">Back to monsters</Link>
-          </Button>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-1">
+          <Heading as="h1" size="lg">
+            {monster.name}
+          </Heading>
+          <Text variant="secondary" size="sm">
+            {monster.size} {monster.type} • {monster.alignment}
+          </Text>
         </div>
+        <Link
+          href="/monsters"
+          className={cn(buttonBaseClasses, buttonVariants.secondary, "w-full sm:w-auto text-center")}
+        >
+          Back to monsters
+        </Link>
+      </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <Card className="space-y-2 border-border bg-surface-strong p-4">
@@ -116,9 +120,11 @@ export async function MonsterDetails({ index }: MonsterDetailsProps) {
           <AbilityGrid monster={monster} />
         </Card>
 
-        <Card className="space-y-4 border-border bg-surface p-5">
-          <ActionsList actions={monster.actions} />
-        </Card>
+        {monster.actions && monster.actions.length > 0 ? (
+          <Card className="space-y-4 border-border bg-surface p-5">
+            <ActionsList actions={monster.actions} />
+          </Card>
+        ) : null}
       </div>
     );
   } catch (error) {
@@ -129,9 +135,12 @@ export async function MonsterDetails({ index }: MonsterDetailsProps) {
             Monster not found
           </Heading>
           <Text variant="secondary">The requested monster could not be located.</Text>
-          <Button variant="secondary" asChild>
-            <Link href="/monsters">Back to monsters</Link>
-          </Button>
+          <Link
+            href="/monsters"
+            className={cn(buttonBaseClasses, buttonVariants.secondary, "inline-flex w-full sm:w-auto text-center")}
+          >
+            Back to monsters
+          </Link>
         </Card>
       );
     }
@@ -142,9 +151,12 @@ export async function MonsterDetails({ index }: MonsterDetailsProps) {
           Error loading monster
         </Heading>
         <Text variant="secondary">{getApiErrorMessage(error)}</Text>
-        <Button variant="secondary" onClick={() => location.reload()}>
+        <Link
+          href={`/monsters/${index}`}
+          className={cn(buttonBaseClasses, buttonVariants.secondary, "inline-flex w-full sm:w-auto text-center")}
+        >
           Retry
-        </Button>
+        </Link>
       </Card>
     );
   }
