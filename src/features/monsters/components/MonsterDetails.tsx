@@ -31,9 +31,7 @@ const AbilityGrid = ({ monster }: { monster: MonsterDetailsType }) => {
           <Text variant="muted" size="sm" className="tracking-wide">
             {label}
           </Text>
-          <Heading as="p" size="md">
-            {value}
-          </Heading>
+          <Text className="text-xl font-semibold text-text-primary">{value}</Text>
         </Card>
       ))}
     </div>
