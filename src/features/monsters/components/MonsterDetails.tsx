@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Card, Heading, Text, buttonBaseClasses, buttonVariants } from "@/design-system";
 import { cn } from "@/design-system/components/utils";
 import { getApiErrorMessage, isNotFoundError } from "../api/errors";
@@ -112,6 +113,7 @@ export async function MonsterDetails({ index }: MonsterDetailsProps) {
 
   const armorClass = monster.armor_class.map((entry) => entry.value).join(", ");
   const speed = formatSpeed(monster.speed);
+  const imageUrl = monster.image ? new URL(monster.image, "https://www.dnd5eapi.co").toString() : null;
 
   return (
     <div className="flex flex-col gap-6">
@@ -131,6 +133,19 @@ export async function MonsterDetails({ index }: MonsterDetailsProps) {
           Back to monsters
         </Link>
       </div>
+
+      {imageUrl ? (
+        <Card className="overflow-hidden border-border bg-surface">
+          <Image
+            src={imageUrl}
+            alt={monster.name}
+            width={600}
+            height={400}
+            className="h-auto w-full object-cover"
+            priority
+          />
+        </Card>
+      ) : null}
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <Card className="space-y-2 border-border bg-surface-strong p-4">
