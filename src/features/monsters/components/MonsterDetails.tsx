@@ -143,7 +143,8 @@ export async function MonsterDetails({ index }: MonsterDetailsProps) {
               width={240}
               height={240}
               className="h-48 w-48 object-contain"
-              priority
+              loading="lazy"
+              sizes="240px"
             />
           </Card>
         </div>
