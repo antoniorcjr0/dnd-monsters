@@ -135,16 +135,18 @@ export async function MonsterDetails({ index }: MonsterDetailsProps) {
       </div>
 
       {imageUrl ? (
-        <Card className="overflow-hidden border-border bg-surface">
-          <Image
-            src={imageUrl}
-            alt={monster.name}
-            width={600}
-            height={400}
-            className="h-auto w-full object-cover"
-            priority
-          />
-        </Card>
+        <div className="flex justify-start">
+          <Card className="overflow-hidden border-border bg-surface">
+            <Image
+              src={imageUrl}
+              alt={monster.name}
+              width={240}
+              height={240}
+              className="h-48 w-48 object-contain"
+              priority
+            />
+          </Card>
+        </div>
       ) : null}
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
