@@ -16,7 +16,7 @@ export default async function MonsterPage({ params }: MonsterPageProps) {
   const { index } = await params;
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-5xl flex-col gap-8 px-6 py-10">
+    <main className="flex flex-col gap-8">
       <Suspense fallback={<Loader message="Summoning monster..." />}>
         <MonsterDetails index={index} />
       </Suspense>

@@ -11,7 +11,7 @@ export function MonsterCard({ monster, className }: MonsterCardProps) {
   return (
     <Card
       className={cn(
-        "group flex flex-col gap-2 border-border bg-surface transition duration-150 hover:-translate-y-0.5 hover:border-accent hover:shadow-md",
+        "group flex flex-col gap-2 border-border/70 bg-surface transition duration-150 hover:-translate-y-0.5 hover:border-accent hover:shadow-md",
         className,
       )}
     >
