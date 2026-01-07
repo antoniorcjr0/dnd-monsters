@@ -11,13 +11,15 @@ export async function fetchMonstersList(): Promise<MonsterListResponse> {
 }
 
 export async function fetchMonsterByIndex(index: string): Promise<MonsterDetails> {
+  const encodedIndex = encodeURIComponent(index);
+
   try {
-    return await fetchJson<MonsterDetails>(`/api/monsters/${index}`, {
+    return await fetchJson<MonsterDetails>(`/api/2014/monsters/${encodedIndex}`, {
       baseUrl: API_BASE_URL,
     });
   } catch (error) {
     if (isNotFoundError(error)) {
-      return fetchJson<MonsterDetails>(`/api/2014/monsters/${index}`, {
+      return fetchJson<MonsterDetails>(`/api/monsters/${encodedIndex}`, {
         baseUrl: API_BASE_URL,
       });
     }
