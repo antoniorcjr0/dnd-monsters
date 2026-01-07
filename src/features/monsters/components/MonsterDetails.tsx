@@ -65,69 +65,16 @@ const ActionsList = ({ actions }: { actions?: MonsterAction[] }) => {
 };
 
 export async function MonsterDetails({ index }: MonsterDetailsProps) {
+  let monster: MonsterDetailsType | null = null;
+  let error: unknown = null;
+
   try {
-    const monster = await fetchMonsterByIndex(index);
+    monster = await fetchMonsterByIndex(index);
+  } catch (err) {
+    error = err;
+  }
 
-    const armorClass = monster.armor_class.map((entry) => entry.value).join(", ");
-    const speed = formatSpeed(monster.speed);
-
-    return (
-      <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-1">
-          <Heading as="h1" size="lg">
-            {monster.name}
-          </Heading>
-          <Text variant="secondary" size="sm">
-            {monster.size} {monster.type} • {monster.alignment}
-          </Text>
-        </div>
-        <Link
-          href="/monsters"
-          className={cn(buttonBaseClasses, buttonVariants.secondary, "w-full sm:w-auto text-center")}
-        >
-          Back to monsters
-        </Link>
-      </div>
-
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <Card className="space-y-2 border-border bg-surface-strong p-4">
-            <Heading as="h3" size="sm">
-              Armor Class
-            </Heading>
-            <Text>{armorClass}</Text>
-          </Card>
-          <Card className="space-y-2 border-border bg-surface-strong p-4">
-            <Heading as="h3" size="sm">
-              Hit Points
-            </Heading>
-            <Text>
-              {monster.hit_points} ({monster.hit_dice})
-            </Text>
-          </Card>
-          <Card className="space-y-2 border-border bg-surface-strong p-4">
-            <Heading as="h3" size="sm">
-              Speed
-            </Heading>
-            <Text>{speed || "—"}</Text>
-          </Card>
-        </div>
-
-        <Card className="space-y-4 border-border bg-surface p-5">
-          <Heading as="h2" size="sm">
-            Ability Scores
-          </Heading>
-          <AbilityGrid monster={monster} />
-        </Card>
-
-        {monster.actions && monster.actions.length > 0 ? (
-          <Card className="space-y-4 border-border bg-surface p-5">
-            <ActionsList actions={monster.actions} />
-          </Card>
-        ) : null}
-      </div>
-    );
-  } catch (error) {
+  if (error) {
     if (isNotFoundError(error)) {
       return (
         <Card className="space-y-3 border-border bg-surface p-6">
@@ -160,4 +107,68 @@ export async function MonsterDetails({ index }: MonsterDetailsProps) {
       </Card>
     );
   }
+
+  if (!monster) {
+    return null;
+  }
+
+  const armorClass = monster.armor_class.map((entry) => entry.value).join(", ");
+  const speed = formatSpeed(monster.speed);
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-1">
+          <Heading as="h1" size="lg">
+            {monster.name}
+          </Heading>
+          <Text variant="secondary" size="sm">
+            {monster.size} {monster.type} • {monster.alignment}
+          </Text>
+        </div>
+        <Link
+          href="/monsters"
+          className={cn(buttonBaseClasses, buttonVariants.secondary, "w-full sm:w-auto text-center")}
+        >
+          Back to monsters
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <Card className="space-y-2 border-border bg-surface-strong p-4">
+          <Heading as="h3" size="sm">
+            Armor Class
+          </Heading>
+          <Text>{armorClass}</Text>
+        </Card>
+        <Card className="space-y-2 border-border bg-surface-strong p-4">
+          <Heading as="h3" size="sm">
+            Hit Points
+          </Heading>
+          <Text>
+            {monster.hit_points} ({monster.hit_dice})
+          </Text>
+        </Card>
+        <Card className="space-y-2 border-border bg-surface-strong p-4">
+          <Heading as="h3" size="sm">
+            Speed
+          </Heading>
+          <Text>{speed || "—"}</Text>
+        </Card>
+      </div>
+
+      <Card className="space-y-4 border-border bg-surface p-5">
+        <Heading as="h2" size="sm">
+          Ability Scores
+        </Heading>
+        <AbilityGrid monster={monster} />
+      </Card>
+
+      {monster.actions && monster.actions.length > 0 ? (
+        <Card className="space-y-4 border-border bg-surface p-5">
+          <ActionsList actions={monster.actions} />
+        </Card>
+      ) : null}
+    </div>
+  );
 }
