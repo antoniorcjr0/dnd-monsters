@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { MonsterList } from "@/features/monsters/components";
 
 export const metadata: Metadata = {
-  title: "Monsters Codex",
-  description: "Browse monsters from the D&D 5e SRD.",
+  title: "Monsters of Dungeons & Dragons",
+  description: "Explore every creature from D&D 5e, from common foes to legendary threats.",
 };
 
 export default function MonstersPage() {

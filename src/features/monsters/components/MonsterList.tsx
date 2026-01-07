@@ -59,10 +59,10 @@ export function MonsterList() {
     <section className="space-y-4">
       <div className="space-y-2">
         <Heading as="h1" size="lg">
-          Monsters
+          All Monsters
         </Heading>
         <Text variant="secondary" size="sm">
-          Fetching the codex...
+          Browse the full bestiary and dive into detailed stats, abilities, and actions.
         </Text>
       </div>
       <Loader />
@@ -99,10 +99,10 @@ export function MonsterList() {
     <section className="space-y-6">
       <div className="space-y-2">
         <Heading as="h1" size="lg">
-          Monsters
+          All Monsters
         </Heading>
         <Text variant="secondary" size="sm">
-          Browse the codex and jump into details.
+          Browse the full bestiary and dive into detailed stats, abilities, and actions.
         </Text>
       </div>
 

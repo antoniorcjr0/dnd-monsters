@@ -14,10 +14,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Monsters Codex",
-    template: "%s | Monsters Codex",
+    default: "Monsters of Dungeons & Dragons",
+    template: "%s | Monsters of Dungeons & Dragons",
   },
-  description: "Browse D&D 5e monsters with a dark, readable codex UI.",
+  description: "Explore every creature from D&D 5e, from common foes to legendary threats.",
 };
 
 export default function RootLayout({
@@ -35,10 +35,13 @@ export default function RootLayout({
             <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
               <div className="flex flex-col leading-tight">
                 <span className="text-sm uppercase tracking-wider text-text-muted">
-                  D&D 5e
+                  D&D 5E
                 </span>
                 <span className="text-xl font-semibold text-text-primary">
-                  Monsters Codex
+                  Monsters of Dungeons & Dragons
+                </span>
+                <span className="text-sm text-text-secondary">
+                  Explore every creature from D&D 5e, from common foes to legendary threats.
                 </span>
               </div>
             </div>
