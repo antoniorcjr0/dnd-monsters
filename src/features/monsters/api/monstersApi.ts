@@ -1,4 +1,5 @@
 import { fetchJson } from "@/lib/fetcher";
+import { isNotFoundError } from "./errors";
 import type { MonsterDetails, MonsterListResponse } from "../types";
 
 const API_BASE_URL = "https://www.dnd5eapi.co";
@@ -10,7 +11,16 @@ export async function fetchMonstersList(): Promise<MonsterListResponse> {
 }
 
 export async function fetchMonsterByIndex(index: string): Promise<MonsterDetails> {
-  return fetchJson<MonsterDetails>(`/api/monsters/${index}`, {
-    baseUrl: API_BASE_URL,
-  });
+  try {
+    return await fetchJson<MonsterDetails>(`/api/monsters/${index}`, {
+      baseUrl: API_BASE_URL,
+    });
+  } catch (error) {
+    if (isNotFoundError(error)) {
+      return fetchJson<MonsterDetails>(`/api/2014/monsters/${index}`, {
+        baseUrl: API_BASE_URL,
+      });
+    }
+    throw error;
+  }
 }
